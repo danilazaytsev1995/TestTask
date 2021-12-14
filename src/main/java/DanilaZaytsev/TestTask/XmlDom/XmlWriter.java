@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -48,15 +49,19 @@ public class XmlWriter {
         // root elements
         Document doc = docBuilder.newDocument();
 
-        for (int i = 0; i < dbList.size(); i++) {
-            System.out.println(dbList.get(i));
-        }
+        /*for (int i = 0; i < dbList.size(); i++) {
+            Element rootElement = doc.createElement(dbList.get(i).getDepCode());
+            doc.appendChild(rootElement);
+            doc.createElement(dbList.get(i).getDepJob());
+            rootElement.appendChild(doc.createElement(dbList.get(i).getDepJob()));
+        }*/
 
-        /*Element rootElement = doc.createElement("company");
+
+        Element rootElement = doc.createElement("dep_table");
         doc.appendChild(rootElement);
 
-        doc.createElement("staff");
-        rootElement.appendChild(doc.createElement("staff"));*/
+        doc.createElement("dep_code");
+        rootElement.appendChild(doc.createElement("dep_code"));
 
         //...create XML elements, and others...
 
