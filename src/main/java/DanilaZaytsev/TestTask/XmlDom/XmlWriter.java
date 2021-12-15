@@ -1,13 +1,11 @@
 package DanilaZaytsev.TestTask.XmlDom;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,41 +30,32 @@ public class XmlWriter {
 
     public void writeDbInXml() throws ParserConfigurationException, TransformerException {
 
-        List<DepartmentInfo> dbList = jdbcTemplate.query("select * from dep_table", new RowMapper<DepartmentInfo>() {
+        List<DepartmentInfo> dbList = jdbcTemplate.query("select * from dep_table",
+                 new RowMapper<DepartmentInfo>() {
             @Override
             public DepartmentInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new DepartmentInfo(rs.getInt("id"), rs.getString("dep_code"),
+                return new DepartmentInfo(rs.getString("dep_code"),
                         rs.getString("dep_job"), rs.getString("description"));
             }
         });
 
-        // List<String> dbList = jdbcTemplate.queryForList("select * from dep_table", String.class);
-
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-        // root elements
         Document doc = docBuilder.newDocument();
-
-        /*for (int i = 0; i < dbList.size(); i++) {
-            Element rootElement = doc.createElement(dbList.get(i).getDepCode());
-            doc.appendChild(rootElement);
-            doc.createElement(dbList.get(i).getDepJob());
-            rootElement.appendChild(doc.createElement(dbList.get(i).getDepJob()));
-        }*/
-
-
-        Element rootElement = doc.createElement("dep_table");
+        Element rootElement = doc.createElement("dep_db");
         doc.appendChild(rootElement);
 
-        doc.createElement("dep_code");
-        rootElement.appendChild(doc.createElement("dep_code"));
+        for (int i = 0; i < dbList.size(); i++) {
+            Element dep_table = doc.createElement("dep_table");
+            rootElement.appendChild(dep_table);
+            dep_table.setAttribute("dep_code", dbList.get(i).getDepCode());
+            dep_table.setAttribute("dep_job", dbList.get(i).getDepJob());
+            dep_table.setAttribute("description", dbList.get(i).getDescription());
+        }
 
-        //...create XML elements, and others...
-
-        // write dom document to a file
         try (FileOutputStream output =
-                     new FileOutputStream("C:/Users/SigmaST3/Desktop/DanilaStudies/example1.xml")) {
+                     new FileOutputStream("C:/Users/SigmaST3/Desktop/DanilaStudies/example777.xml")) {
             writeXml(doc, output);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,7 +63,6 @@ public class XmlWriter {
 
     }
 
-    // write doc to output stream
     private static void writeXml(Document doc,
                                  OutputStream output)
             throws TransformerException {
