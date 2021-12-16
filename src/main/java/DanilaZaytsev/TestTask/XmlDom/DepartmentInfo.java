@@ -1,24 +1,14 @@
 package DanilaZaytsev.TestTask.XmlDom;
 
 public class DepartmentInfo {
-    private long id;
     private String depCode;
     private String depJob;
     private String description;
 
-    public DepartmentInfo(long id, String depCode, String depJob, String description) {
-        this.id = id;
+    public DepartmentInfo(String depCode, String depJob, String description) {
         this.depCode = depCode;
         this.depJob = depJob;
         this.description = description;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getDepCode() {
