@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dep_db>
+    <dep_table dep_code="455" dep_job="HR" description="something comment"/>
+    <dep_table dep_code="173" dep_job="JavaMiddleDeveloper" description=""/>
+    <dep_table dep_code="333" dep_job="PythonJuniorDeveloper" description="какой-то комментарий"/>
+</dep_db>
