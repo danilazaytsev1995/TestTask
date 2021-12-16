@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class XmlWriter {
@@ -54,8 +55,12 @@ public class XmlWriter {
             dep_table.setAttribute("description", dbList.get(i).getDescription());
         }
 
+        Scanner console = new Scanner(System.in);
+        System.out.println("Введите путь и название файла, в который сохранится копия базы данных: ");
+        String path = console.nextLine();
+
         try (FileOutputStream output =
-                     new FileOutputStream("C:/Users/SigmaST3/Desktop/DanilaStudies/example777.xml")) {
+                     new FileOutputStream(path)) {
             writeXml(doc, output);
         } catch (IOException e) {
             e.printStackTrace();

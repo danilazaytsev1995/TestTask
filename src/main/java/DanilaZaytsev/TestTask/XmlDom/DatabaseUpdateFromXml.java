@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 @Component
 public class DatabaseUpdateFromXml {
@@ -27,7 +28,12 @@ public class DatabaseUpdateFromXml {
     public void DbUpdate() throws ParserConfigurationException, SAXException, IOException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new File("C:/Users/SigmaST3/Desktop/DanilaStudies/example2.xml"));
+
+        Scanner console = new Scanner(System.in);
+        System.out.println("Введите полный путь к файлу, из которого обновится база данных: ");
+        String path = console.nextLine();
+
+        Document document = builder.parse(new File(path));
 
         collectInformation(document, DEPTABLE);
         jdbcTemplate.execute("DELETE FROM dep_table");
